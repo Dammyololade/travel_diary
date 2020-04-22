@@ -11,8 +11,8 @@ class MyTripListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     populateItems();
-    return Column(
       children: <Widget>[
+    return Column(
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 19),
           child: Column(

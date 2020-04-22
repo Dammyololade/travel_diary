@@ -38,9 +38,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.search,
                     size: 24, color: Colors.grey,
-                  ),
+                  ) ,
                   hintText: "Search your Journals",
-                  border: InputBorder.none,
+                  border : InputBorder.none,
                   hintStyle: TextStyle(
                     fontSize: 13
                   )
