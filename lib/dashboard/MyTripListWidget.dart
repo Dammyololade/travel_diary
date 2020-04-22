@@ -11,8 +11,8 @@ class MyTripListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     populateItems();
-      children: <Widget>[
     return Column(
+      children: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 19),
           child: Column(
@@ -45,20 +45,24 @@ class MyTripListWidget extends StatelessWidget {
             ],
           ),
         ),
-
-        SizedBox(height: 14,),
+        SizedBox(
+          height: 14,
+        ),
         Expanded(
           child: ListView.builder(
-              itemCount: items.length, itemBuilder: (context, index) {
+              itemCount: items.length,
+              itemBuilder: (context, index) {
                 var trip = items[index];
                 return Column(
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                       margin: EdgeInsets.only(bottom: 5),
                       child: Row(
                         children: <Widget>[
-                          Image.asset(trip.imagePath,
+                          Image.asset(
+                            trip.imagePath,
                             width: 87,
                             fit: BoxFit.cover,
                           ),
@@ -67,48 +71,51 @@ class MyTripListWidget extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(trip.name,
+                                Text(
+                                  trip.name,
                                   style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold
-                                  ),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
                                 ),
-
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 2),
-                                  child: Text(trip.address,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 2),
+                                  child: Text(
+                                    trip.address,
                                     style: TextStyle(
-                                        fontSize: 12,
-                                      color: Colors.grey
-                                    ),
+                                        fontSize: 12, color: Colors.grey),
                                   ),
                                 ),
-
                                 Row(
                                   children: <Widget>[
-                                    Text("${trip.rating}",
+                                    Text(
+                                      "${trip.rating}",
                                       style: TextStyle(
-                                          fontSize: 10,
+                                        fontSize: 10,
                                       ),
                                     ),
-                                    SizedBox(width: 2,),
-
-                                    Icon(Icons.star, color: Colors.orange.withOpacity(.2),
+                                    SizedBox(
+                                      width: 2,
+                                    ),
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.orange.withOpacity(.2),
                                       size: 14,
                                     )
                                   ],
                                 ),
-
                               ],
                             ),
                           )
                         ],
                       ),
                     ),
-                    Divider(color: Colors.white,)
+                    Divider(
+                      color: Colors.white,
+                    )
                   ],
                 );
-          }),
+              }),
         )
       ],
     );
