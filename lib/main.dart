@@ -1,7 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:traveldiary/Constants.dart';
+import 'package:traveldiary/HomeScreen.dart';
+import 'package:traveldiary/LoginScreen.dart';
+import 'package:traveldiary/SessionManager.dart';
 import 'package:traveldiary/dashboard/DashboardScreen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SessionManager.init();
+  final FirebaseApp app = await FirebaseApp.configure(
+    name: 'test',
+    options: const FirebaseOptions(
+      googleAppID: '1:160829198106:android:8e27bc5c9117772c9926a3',
+      gcmSenderID: '160829198106',
+      apiKey: Constants.FCM_APi,
+      projectID: 'generalapps-dda1e',
+    ),
+  );
+  final Firestore firestore = Firestore(app: app);
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -10,18 +30,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
+          accentColor: Color(0xffED882B)
       ),
-      home: DashboardScreen(),
+      home: SessionManager.isLoggedIn ? HomeScreen() : LoginScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
