@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:traveldiary/HomeScreen.dart';
 import 'package:traveldiary/SessionManager.dart';
 import 'package:traveldiary/UserModel.dart';
-import 'package:traveldiary/dashboard/DashboardScreen.dart';
 
 ///
 /// project: travel_diary
