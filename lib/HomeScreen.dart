@@ -3,6 +3,8 @@ import 'package:traveldiary/ThirdScreen/Top.dart';
 import 'package:traveldiary/dashboard/DashboardScreen.dart';
 import 'package:traveldiary/SecondScreen/NewTrip.dart';
 import 'package:traveldiary/ThirdScreen/Top.dart';
+import 'package:traveldiary/Fourth/Destination.dart';
+import 'package:traveldiary/Fourth/DestinationList.dart';
 
 ///
 /// project: travel_diary
@@ -31,10 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
      Top(),
     ),
     Container(
-      child: Center(child: Text("Fourth Page")),
+      child:
+      Destination(),
     ),
     Container(
-      child: Center(child: Text("Profile Page")),
+      child: Center(child:
+       DestinationList(),
+    ),
     ),
   ];
 

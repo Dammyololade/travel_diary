@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:traveldiary/SecondScreen/NewTripModel.dart';
-import 'package:traveldiary/SecondScreen/SessionManager1.dart';
+
 
 
 class NewTrip extends StatefulWidget {
@@ -264,11 +264,11 @@ class _NewTripState extends State<NewTrip> {
                                       hintStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.normal), enabled: false,
                                     ),
                                   ),
-                   ],
-                 ),
+                                ],
+                              ),
                             ),
                           ),
-                ],
+                        ],
                       ),
 
                     ),
@@ -336,23 +336,8 @@ class _NewTripState extends State<NewTrip> {
         );
     DocumentReference reference =
     await _firestore.collection("Journals").add(model.toMap());
-    /*if (reference != null) {
-      DocumentSnapshot snapshot = await reference.get();
-      NewTripModel model = NewTripModel.fromSnapshot(snapshot);
-      saveDetailsLocally(model);
-          } else {} */
   }
 
-  /*void saveDetailsLocally(NewTripModel model) {
-    SessionManager1.tripTitle = model.tripTitle;
-    SessionManager1.country = model.country;
-    SessionManager1.imageUrl = model.imageUrl;
-    SessionManager1.imageUrl1 = model.imageUrl1;
-    SessionManager1.imageUrl2 = model.imageUrl2;
-    SessionManager1.moment = model.moment;
-    SessionManager1.date = model.date;
-    SessionManager1.documentId = model.documentId;
-  }*/
 }
 
 
