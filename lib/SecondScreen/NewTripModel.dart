@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class NewTripModel {
+  static const String cDocumentId = "documnetId";
   static const String cTripTitle = "tripTitle";
   static const String cCountry= "country";
   static const String cImageUrl = "imageUrl";
@@ -31,14 +32,14 @@ class NewTripModel {
 
   Map<String, dynamic> toMap() {
     return {
+      cDocumentId: documentId,
       cTripTitle: tripTitle,
       cCountry: country,
       cImageUrl: imageUrl,
       cImageUrl1: imageUrl1,
       cImageUrl2: imageUrl2,
       cMoment: moment,
-
-    };
+          };
   }
 
   NewTripModel.fromSnapshot(DocumentSnapshot snapshot) {
