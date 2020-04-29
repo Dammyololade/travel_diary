@@ -7,15 +7,13 @@ import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:traveldiary/SecondScreen/NewTripModel.dart';
 
-
-
-class NewTrip extends StatefulWidget {
+class NewTripJournalScreen extends StatefulWidget {
   @override
   _NewTripState createState() => _NewTripState();
 }
 
 
-class _NewTripState extends State<NewTrip> {
+class _NewTripState extends State<NewTripJournalScreen> {
 
 
   File _image;
