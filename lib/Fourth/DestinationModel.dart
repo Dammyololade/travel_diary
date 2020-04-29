@@ -42,6 +42,7 @@ class DestinationModel {
     destinationName = snapshot.data[cDestinationName];
     departureDate = snapshot.data[cDepartureDate];
     arrivalDate = snapshot.data[cArrivalDate];
+    status = snapshot.data[cStatus];
 
   }
 }
