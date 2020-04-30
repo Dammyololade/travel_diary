@@ -82,7 +82,7 @@ class _DestinationState extends State<AddDestinationScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        _selectDate((date) {
+                        _selectDate((DateTime date) {
                           setState(() {
                             _departureDate = date;
                           });
