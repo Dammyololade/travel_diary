@@ -39,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
           onTap: (int index) {
+            //tap action here change the state of the bottom navigation
             setState(() {
               selectedIndex = index;
             });
