@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:traveldiary/SessionManager.dart';
 
 
 class NewTripModel {
@@ -32,7 +33,7 @@ class NewTripModel {
 
   Map<String, dynamic> toMap() {
     return {
-      cDocumentId: documentId,
+      cDocumentId: SessionManager.documentId,
       cTripTitle: tripTitle,
       cCountry: country,
       cImageUrl: imageUrl,
