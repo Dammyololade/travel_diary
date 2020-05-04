@@ -181,6 +181,9 @@ class _DestinationState extends State<AddDestinationScreen> {
       await _firestore.collection(AppConfig.destinationCollection).add(
           model.toMap());
       Navigator.of(context).pop();
+//      _scaffoldKey.currentState.showBottomSheet((context) => Column(
+//
+//      ));
     }
   }
 

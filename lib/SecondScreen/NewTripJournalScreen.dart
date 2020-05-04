@@ -7,7 +7,7 @@ import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:traveldiary/SecondScreen/NewTripModel.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
+import 'package:traveldiary/custom/LoadingDialog.dart';
 
 class NewTripJournalScreen extends StatefulWidget {
   @override
@@ -24,12 +24,10 @@ class _NewTripState extends State<NewTripJournalScreen> {
   var _scaffoldKey = GlobalKey<ScaffoldState>();
 
   var _date;
-  String _trip = "";
-  String _country = "";
-  String _moment = "";
-  String fileName = "";
-  String fileName1 = "";
-  String fileName2 = "";
+
+  var _titleController = TextEditingController();
+  var _addressController = TextEditingController();
+  var _commentController = TextEditingController();
 
   Future getDate() async {
     setState(() {
@@ -45,35 +43,18 @@ class _NewTripState extends State<NewTripJournalScreen> {
     });
   }
 
-  Future _getFileName(BuildContext context) {
-    fileName = basename(_image.path);
-    fileName1 = basename(_image1.path);
-    fileName2 = basename(_image2.path);
+  Future<dynamic> _uploadimage(File imageFile) async {
+    try {
+      StorageReference _firebaseStorageRef =
+      FirebaseStorage.instance.ref().child(basename(imageFile.path));
+      StorageUploadTask uploadTask = _firebaseStorageRef.putFile(imageFile);
+      StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+      return await taskSnapshot.ref.getDownloadURL();
+    } catch (error) {
+      print(error);
+    }
   }
 
-
-
-
-   Future _uploadimage(BuildContext context) async{
-    StorageReference _firebaseStorageRef = FirebaseStorage.instance.ref().child(fileName);
-    StorageUploadTask uploadTask =_firebaseStorageRef.putFile(_image);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-       }
-
-  Future _uploadimage1(BuildContext context) async{
-    StorageReference _firebaseStorageRef = FirebaseStorage.instance.ref().child(fileName1);
-    StorageUploadTask uploadTask =_firebaseStorageRef.putFile(_image1);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-  }
-
-  Future _uploadimage2(BuildContext context) async{
-    StorageReference _firebaseStorageRef = FirebaseStorage.instance.ref().child(fileName2);
-    StorageUploadTask uploadTask =_firebaseStorageRef.putFile(_image2);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    setState(() {
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Image Uploaded')));
-    });
-  }
   Future getIamge1() async {
     var image1 = await ImagePicker.pickImage(source: ImageSource.gallery);
 
@@ -127,12 +108,12 @@ class _NewTripState extends State<NewTripJournalScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                       color: Color(0xffF0F0F0),
-
                     ),
                     child: TextField(
+                      controller: _titleController,
                       decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 2),
+                          contentPadding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 2),
                           hintText: "Your Trip Title",
                           border: InputBorder.none,
                           hintStyle: TextStyle(
@@ -144,9 +125,6 @@ class _NewTripState extends State<NewTripJournalScreen> {
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
-                      onChanged: (String str) {
-                        _trip = str;
-                      },
                     ),
                   ),
                   new Container(
@@ -158,6 +136,7 @@ class _NewTripState extends State<NewTripJournalScreen> {
                       child: new Column(
                         children: [
                           TextField(
+                            controller: _addressController,
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 15, vertical: 2),
@@ -172,13 +151,9 @@ class _NewTripState extends State<NewTripJournalScreen> {
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                             ),
-                            onChanged: (String st) {
-                              _country = st;
-                            },
                           ),
                         ],
                       )),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -188,12 +163,14 @@ class _NewTripState extends State<NewTripJournalScreen> {
                           margin: EdgeInsets.only(
                               right: 5, left: 5, bottom: 10, top: 10),
                           child: (_image != null)
-                              ? Image.file(_image, fit: BoxFit.cover,
-                            height: 95,)
+                              ? Image.file(
+                            _image,
+                            fit: BoxFit.cover,
+                            height: 95,
+                          )
                               : new Stack(
                             children: [
-                              new Padding(
-                                  padding: EdgeInsets.all(30.0)),
+                              new Padding(padding: EdgeInsets.all(30.0)),
                               Container(
                                 height: 95,
                                       margin: EdgeInsets.only(
@@ -221,12 +198,14 @@ class _NewTripState extends State<NewTripJournalScreen> {
                           margin: EdgeInsets.only(
                               right: 5, left: 5, bottom: 10, top: 10),
                           child: (_image1 != null)
-                              ? Image.file(_image1, fit: BoxFit.cover,
-                            height: 95,)
+                              ? Image.file(
+                            _image1,
+                            fit: BoxFit.cover,
+                            height: 95,
+                          )
                               : new Stack(
                             children: [
-                              new Padding(
-                                  padding: EdgeInsets.all(30.0)),
+                              new Padding(padding: EdgeInsets.all(30.0)),
                               Container(
                                 height: 95,
                                       margin: EdgeInsets.only(
@@ -251,12 +230,14 @@ class _NewTripState extends State<NewTripJournalScreen> {
                         child: new Card(
                           color: Color(0xffF0F0F0),
                           child: (_image2 != null)
-                              ? Image.file(_image2, fit: BoxFit.cover,
-                            height: 95,)
+                              ? Image.file(
+                            _image2,
+                            fit: BoxFit.cover,
+                            height: 95,
+                          )
                               : new Stack(
                             children: [
-                              new Padding(
-                                  padding: EdgeInsets.all(30.0)),
+                              new Padding(padding: EdgeInsets.all(30.0)),
                               Container(
                                 height: 95,
                                       margin: EdgeInsets.only(
@@ -280,7 +261,9 @@ class _NewTripState extends State<NewTripJournalScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   new Container(
                     decoration: BoxDecoration(
                       color: Color(0xffF0F0F0),
@@ -289,6 +272,7 @@ class _NewTripState extends State<NewTripJournalScreen> {
                     child: new Column(
                       children: [
                         TextField(
+                          controller: _commentController,
                           decoration: InputDecoration(
                               hintText: 'Recount the best momments of the trip',
                               contentPadding:
@@ -296,9 +280,7 @@ class _NewTripState extends State<NewTripJournalScreen> {
                               border: InputBorder.none,
                               hintStyle: TextStyle(
                                   fontSize: 12, fontWeight: FontWeight.bold)),
-                          onChanged: (String s) {
-                            _moment = s;
-                          },
+                          maxLines: 5,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 120, top: 80),
@@ -334,10 +316,12 @@ class _NewTripState extends State<NewTripJournalScreen> {
               ),
             ),
           ),
-          Container(height: MediaQuery
-              .of(context)
-              .size
-              .height,),
+          Container(
+            height: MediaQuery
+                .of(context)
+                .size
+                .height,
+          ),
           Positioned(
               left: 20,
               right: 20,
@@ -352,17 +336,13 @@ class _NewTripState extends State<NewTripJournalScreen> {
                       }),
                   SizedBox(
                     width: 15,
-              ),
+                  ),
                   IconButton(
                       icon: Icon(Icons.camera_enhance), onPressed: () {}),
                   Expanded(child: SizedBox()),
                   RaisedButton(
                     onPressed: () {
                       setState(() {
-                        _getFileName(context);
-                        _uploadimage(context);
-                        _uploadimage1(context);
-                        _uploadimage2(context);
                         _saveDetails();
                         process = true;
                       });
@@ -375,12 +355,10 @@ class _NewTripState extends State<NewTripJournalScreen> {
                       style: TextStyle(color: Colors.white),
                     ),
                     shape: RoundedRectangleBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(20))),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
                   ),
                 ],
-              )
-          )
+              ))
         ],
       ),
     );
@@ -388,26 +366,42 @@ class _NewTripState extends State<NewTripJournalScreen> {
 
   void _saveDetails() async {
     if (validateInput()) {
-      NewTripModel model = NewTripModel(
-        tripTitle: _trip,
-        country: _country,
-        imageUrl: fileName,
-        imageUrl1: fileName1,
-        imageUrl2: fileName2,
-        moment: _moment,
+      JournalModel model = JournalModel(
+        tripTitle: _titleController.text,
+        country: _addressController.text,
+        moment: _commentController.text,
       );
-      DocumentReference reference =
+      LoadingDialog(this.context, "Saving you Journal").show();
+      if (_image != null) {
+        model.imageUrl = await _uploadimage(_image);
+      }
+      if (_image1 != null) {
+        model.imageUrl1 = await _uploadimage(_image1);
+      }
+      if (_image2 != null) {
+        model.imageUrl2 = await _uploadimage(_image2);
+      }
       await _firestore.collection("Journals").add(model.toMap());
+      Navigator.of(this.context).pop();
+      setState(() {
+        _titleController.text = "";
+        _addressController.text = "";
+        _commentController.text = "";
+        _image = null;
+        _image1 = null;
+        _image2 = null;
+        _showMessage("Journal has been added successfully");
+      });
     }
   }
 
   bool validateInput() {
     bool validated = false;
-    if (_trip == "") {
+    if (_titleController.text.isEmpty) {
       _showMessage("Please enter your Trip Title");
-    } else if (_country == "") {
+    } else if (_addressController.text.isEmpty) {
       _showMessage("Please enter your country and city");
-    } else if (_moment == "") {
+    } else if (_commentController.text.isEmpty) {
       _showMessage("Please enter your moment");
     } else {
       validated = true;
