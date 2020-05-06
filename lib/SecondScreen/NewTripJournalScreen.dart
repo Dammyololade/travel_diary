@@ -8,8 +8,9 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:traveldiary/SecondScreen/NewTripModel.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:traveldiary/ThirdScreen/MyJournalsScreen.dart';
 import 'package:traveldiary/custom/LoadingDialog.dart';
-import 'package:traveldiary/ThirdScreen/Top.dart';
+
 
 class NewTripJournalScreen extends StatefulWidget {
   @override
@@ -430,7 +431,7 @@ class _NewTripState extends State<NewTripJournalScreen> {
                            ),
                            RaisedButton(onPressed: (){
                              Navigator.of(context).pushReplacement(
-                                 MaterialPageRoute(builder: (context) => Top()));
+                                 MaterialPageRoute(builder: (context) => MyJournalsScreen()));
                            },
                              child:
                              Text('View', style: TextStyle(fontSize: 12, color: Colors.white),),

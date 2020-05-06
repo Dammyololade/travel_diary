@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 
   class DestinationList extends StatefulWidget {
@@ -11,86 +10,123 @@ import 'package:cloud_firestore/cloud_firestore.dart';
   class _DestinationListState extends State<DestinationList> {
     bool cbool = false;
 
-    Firestore _firestore = Firestore.instance;
 
-    List<DocumentSnapshot> _detail = [];
-
-    _getDetails() async{
-      Query q = _firestore.collection("Destination");
-      QuerySnapshot querySnapshot= await q.getDocuments();
-       _detail = querySnapshot.documents;
-    }
+    var _comment = TextEditingController();
+    bool _edit = false;
 
     @override
     Widget build(BuildContext context) {
       return Scaffold(
-        body:
-        new Container(
-          alignment: Alignment.center,
-          child:
-          new Column(
-            children: [
-              SizedBox(height: 60,),
-              Text('Destination Wishlist',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                 new Container(
-                   child: Expanded(
-                     child: ListView.builder(
-                         itemCount: _detail.length,
-                         itemBuilder:(BuildContext context, int index) =>
-                         new Row(
-                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                           children: [
-
-                             new Container(
-                               margin: EdgeInsets.only(left: 25, right: 10, top: 10, bottom: 10),
-                               child:
-                               new Column(
-                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                 children: [
-                                   Padding(padding: EdgeInsets.only(left: 10, right: 10)),
-
-                                   Text(_detail[index].data["destinationName"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
-                                   new Container(
-                                     margin: EdgeInsets.only( right: 5, top: 3, bottom: 3),
-                                     child:
-                                     new Row(
-                                       mainAxisAlignment: MainAxisAlignment.start,
-                                       children: [
-                                         Text(_detail[index].data["destinationName"], style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15),),
-                                         Text(_detail[index].data["departureDate"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
-                                       ],
-                                     ),
-                                   ),
-                                   new Container(
-                                     margin: EdgeInsets.only( right: 5, top: 3, bottom: 3),
-                                     child:
-                                     new Column(
-                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                       children: [
-                                         Text(_detail[index].data["arrivalDate"], style: TextStyle(fontWeight: FontWeight.bold,
-                                             color: Colors.orange,
-                                             fontSize: 10),),
-                                       ],
-                                     ),
-                                   )
-                                 ],
-                               ),
-                             ),
-                             Checkbox(value: cbool, onChanged: (bool cb){
-                               setState(() {
-                                 cbool = cb;
-                               });
-                             }),
-                             Divider(color: Colors.grey, thickness: 10,),
-                           ],
-                         ),
-                         ),
-                   ),
-                 ),
-            ],
-          ),
-        ),
+          body: SingleChildScrollView(
+            child: new Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                new Container(
+                  height: 300,
+                  child:
+                  new Stack(
+                    children: [
+                      Image.asset("images/bridge.png",
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.cover,),
+                      Positioned(
+                          left: 20,
+                          right: 20,
+                          bottom: 40,
+                          child:  Text('The Bridge Location', style: TextStyle
+                            (color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),)),
+                      Positioned(
+                          right: 30,
+                          bottom: 40,
+                          child:  Text('July, 08', style: TextStyle
+                            (color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),)),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 25, right: 15),
+                  alignment: Alignment.topLeft,
+                  child:
+                  new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 15, ),
+                      Text('London Exposition', style: TextStyle(
+                          fontSize: 25, fontWeight: FontWeight.bold
+                      ),),
+                      SizedBox(height: 15,),
+                      new Container(
+                          padding: EdgeInsets.only(bottom: 50),
+                          child: new Column(
+                            children: [
+                              TextField(
+                                controller: _comment,
+                                decoration: InputDecoration(
+                                    contentPadding:
+                                    EdgeInsets.only(left: 5, top: 3, bottom: 5),
+                                    border: InputBorder.none,
+                                    hintStyle: TextStyle(
+                                        fontSize: 12, fontWeight: FontWeight.bold)),
+                                maxLines: 5, enabled: _edit,
+                              ),
+                            ],
+                          )
+                      ),
+                      SizedBox(height: 15,),
+                      new Container(
+                        alignment: Alignment.center,
+                        child:
+                        new RaisedButton(onPressed: (){
+                          setState(() {
+                            _edit = true;
+                          });
+                        }, color: Colors.orangeAccent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ), child: Text('Edit this Journal ', style: TextStyle( color: Colors.white),),
+                        ),
+                      ),
+                      SizedBox(height: 15,),
+                      Divider(),
+                      new Column(
+                        children: [
+                          SizedBox(height: 25,),
+                          Text('Rate your trip', style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),),
+                          SizedBox(height: 5,),
+                          new Container(
+                            margin: EdgeInsets.only(left: 80, right: 20),
+                            child:
+                            new Row(
+                              children: [
+                                IconButton(icon: Icon(Icons.star), color: Colors.orange, onPressed: (){}),
+                                IconButton(icon: Icon(Icons.star), color: Colors.orange, onPressed: (){}),
+                                IconButton(icon: Icon(Icons.star), color: Colors.orange, onPressed: (){}),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(),
+                SizedBox(height: 15,),
+                new Container(
+                  margin: EdgeInsets.only(left: 25, right: 15),
+                  child:
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('last edited on......', style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal,
+                          fontStyle: FontStyle.italic, color: Colors.grey),),
+                      Icon(Icons.more_vert, size: 25,),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
       );
       
     }
