@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:traveldiary/SecondScreen/NewTripModel.dart';
 
 class Bottom extends StatefulWidget {
   @override
@@ -6,6 +8,9 @@ class Bottom extends StatefulWidget {
 }
 
 class _BottomState extends State<Bottom> {
+
+  final _firestore = Firestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,4 +27,4 @@ class _BottomState extends State<Bottom> {
       ),
     );
   }
-}
+ }
