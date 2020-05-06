@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:traveldiary/Fourth/DestinationWishlistScreen.dart';
-import 'package:traveldiary/ThirdScreen/Top.dart';
+import 'package:traveldiary/ThirdScreen/MyJournalsScreen.dart';
 import 'package:traveldiary/dashboard/DashboardScreen.dart';
 import 'package:traveldiary/SecondScreen/NewTripJournalScreen.dart';
-import 'package:traveldiary/ThirdScreen/Top.dart';
+import 'package:traveldiary/ThirdScreen/MyJournalsScreen.dart';
 import 'package:traveldiary/Fourth/AddDestinationScreen.dart';
 import 'package:traveldiary/Fourth/DestinationList.dart';
 
@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var _widgets = [
     DashboardScreen(),
     NewTripJournalScreen(),
-    Top(),
+    MyJournalsScreen(),
     DestinationWishlistScreen(),
     DestinationList(),
   ];

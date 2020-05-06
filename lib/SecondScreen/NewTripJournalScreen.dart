@@ -370,8 +370,9 @@ class _NewTripState extends State<NewTripJournalScreen> {
         tripTitle: _titleController.text,
         country: _addressController.text,
         moment: _commentController.text,
+          date: _date.toString()
       );
-      LoadingDialog(this.context, "Saving you Journal").show();
+      LoadingDialog(this.context, "Saving your Journal").show();
       if (_image != null) {
         model.imageUrl = await _uploadimage(_image);
       }
