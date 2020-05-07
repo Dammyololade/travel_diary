@@ -10,6 +10,7 @@ class JournalModel {
   static const String cImageUrl2 = "imageUrl2";
   static const String cMoment = "moment";
   static const String cUserId = "userId";
+  static const String cDate = "date";
   static const String cRating = "rating";
 
 
@@ -42,6 +43,7 @@ class JournalModel {
       cImageUrl: imageUrl,
       cImageUrl1: imageUrl1,
       cImageUrl2: imageUrl2,
+      cDate: date,
       cMoment: moment,
       cRating: rating,
     };
@@ -54,6 +56,7 @@ class JournalModel {
     imageUrl = snapshot.data[cImageUrl];
     imageUrl1 = snapshot.data[cImageUrl1];
     imageUrl2 = snapshot.data[cImageUrl2];
+    date = snapshot.data[cDate];
     moment = snapshot.data[cMoment];
     rating = snapshot.data[cRating];
   }

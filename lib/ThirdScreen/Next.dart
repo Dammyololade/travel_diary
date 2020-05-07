@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:traveldiary/SecondScreen/NewTripModel.dart';
+
+import '../SecondScreen/NewTripModel.dart';
 
 class Next extends StatefulWidget {
   @override
@@ -6,7 +11,12 @@ class Next extends StatefulWidget {
 }
 
 class _NextState extends State<Next> {
-  @override
+
+ final _firestore = Firestore.instance;
+ 
+  List <DocumentSnapshot> _details = [];
+  
+   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(left: 25, right: 25),
@@ -37,6 +47,7 @@ class _NextState extends State<Next> {
               child: new Stack(
                 children: [
                   SizedBox(width: 100,),
+
                 ],
               ),
             ),
@@ -47,5 +58,6 @@ class _NextState extends State<Next> {
 
 
     );
+    
   }
 }

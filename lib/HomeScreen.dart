@@ -3,8 +3,6 @@ import 'package:traveldiary/Fourth/DestinationWishlistScreen.dart';
 import 'package:traveldiary/ThirdScreen/MyJournalsScreen.dart';
 import 'package:traveldiary/dashboard/DashboardScreen.dart';
 import 'package:traveldiary/SecondScreen/NewTripJournalScreen.dart';
-import 'package:traveldiary/ThirdScreen/MyJournalsScreen.dart';
-import 'package:traveldiary/Fourth/AddDestinationScreen.dart';
 import 'package:traveldiary/Fourth/DestinationList.dart';
 
 ///

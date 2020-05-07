@@ -4,26 +4,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:traveldiary/SecondScreen/NewTripModel.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:traveldiary/ThirdScreen/MyJournalsScreen.dart';
 import 'package:traveldiary/custom/LoadingDialog.dart';
+
 
 class NewTripJournalScreen extends StatefulWidget {
   @override
   _NewTripState createState() => _NewTripState();
 }
+File _image;
 
 class _NewTripState extends State<NewTripJournalScreen> {
-  File _image;
   File _image1;
   File _image2;
   bool process = false;
 
+  String formatDate(DateTime dateTime) =>
+      dateTime == null ? "" : DateFormat.yMMMd().format(dateTime);
+
   final _firestore = Firestore.instance;
   var _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  var _date;
+  var _date, _ndate;
 
   var _titleController = TextEditingController();
   var _addressController = TextEditingController();
@@ -293,7 +299,7 @@ class _NewTripState extends State<NewTripJournalScreen> {
                                 TextField(
                                   decoration: InputDecoration(
                                     hintText: (_date != null)
-                                        ? '$_date'
+                                        ? formatDate(_date)
                                         : 'July 20, 2019',
                                     border: InputBorder.none,
                                     hintStyle: TextStyle(
@@ -366,13 +372,14 @@ class _NewTripState extends State<NewTripJournalScreen> {
 
   void _saveDetails() async {
     if (validateInput()) {
+      _ndate = formatDate(_date);
       JournalModel model = JournalModel(
         tripTitle: _titleController.text,
         country: _addressController.text,
         moment: _commentController.text,
-          date: _date.toString()
+        date: _ndate.toString(),
       );
-      LoadingDialog(this.context, "Saving your Journal").show();
+      LoadingDialog(this.context, "Saving you Journal").show();
       if (_image != null) {
         model.imageUrl = await _uploadimage(_image);
       }
@@ -384,6 +391,63 @@ class _NewTripState extends State<NewTripJournalScreen> {
       }
       await _firestore.collection("Journals").add(model.toMap());
       Navigator.of(this.context).pop();
+     _scaffoldKey.currentState.showBottomSheet((context) =>
+         Container(
+           margin: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
+           child: new Column(
+           children: [
+             new CircleAvatar(backgroundColor: Colors.green,
+               child:
+               Icon(Icons.check, color: Colors.white, size: 35,),
+             ),
+             SizedBox(height: 25,),
+             Text('Journal Has been Ssaved', style: TextStyle(fontSize: 12,),),
+             new Container(
+               margin: EdgeInsets.only(left: 25, right: 25),
+               child:
+                Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                     SizedBox(height: 15,),
+                     new Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                         children: [
+                           RaisedButton(onPressed: (){
+                             setState(() {
+                               _titleController.text = "";
+                               _addressController.text = "";
+                               _commentController.text = "";
+                               _image = null;
+                               _image1 = null;
+                               _image2 = null;
+                               _date = null;
+                               Navigator.of(context).pop();
+                             });
+                           },
+                             child:
+                             Text('Creat New', style: TextStyle(fontSize: 12),),
+                             shape: RoundedRectangleBorder(
+                                 borderRadius: BorderRadius.all(Radius.circular(8))),
+                           ),
+                           RaisedButton(onPressed: (){
+                             Navigator.of(context).pushReplacement(
+                                 MaterialPageRoute(builder: (context) => MyJournalsScreen()));
+                           },
+                             child:
+                             Text('View', style: TextStyle(fontSize: 12, color: Colors.white),),
+                             shape: RoundedRectangleBorder(
+                                 borderRadius: BorderRadius.all(Radius.circular(8))),
+                             color: Colors.orange,
+                           ),
+                     ],
+             ),
+           ],
+           ),
+             ),
+       ],
+           ),
+         ));
+
       setState(() {
         _titleController.text = "";
         _addressController.text = "";
@@ -409,4 +473,6 @@ class _NewTripState extends State<NewTripJournalScreen> {
     }
     return validated;
   }
+
+
 }
