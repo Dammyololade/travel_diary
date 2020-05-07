@@ -11,11 +11,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:traveldiary/ThirdScreen/MyJournalsScreen.dart';
 import 'package:traveldiary/custom/LoadingDialog.dart';
 
-
 class NewTripJournalScreen extends StatefulWidget {
   @override
   _NewTripState createState() => _NewTripState();
 }
+
 File _image;
 
 class _NewTripState extends State<NewTripJournalScreen> {
@@ -391,63 +391,7 @@ class _NewTripState extends State<NewTripJournalScreen> {
       }
       await _firestore.collection("Journals").add(model.toMap());
       Navigator.of(this.context).pop();
-     _scaffoldKey.currentState.showBottomSheet((context) =>
-         Container(
-           margin: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
-           child: new Column(
-           children: [
-             new CircleAvatar(backgroundColor: Colors.green,
-               child:
-               Icon(Icons.check, color: Colors.white, size: 35,),
-             ),
-             SizedBox(height: 25,),
-             Text('Journal Has been Ssaved', style: TextStyle(fontSize: 12,),),
-             new Container(
-               margin: EdgeInsets.only(left: 25, right: 25),
-               child:
-                Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
-                     SizedBox(height: 15,),
-                     new Row(
-                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                         children: [
-                           RaisedButton(onPressed: (){
-                             setState(() {
-                               _titleController.text = "";
-                               _addressController.text = "";
-                               _commentController.text = "";
-                               _image = null;
-                               _image1 = null;
-                               _image2 = null;
-                               _date = null;
-                               Navigator.of(context).pop();
-                             });
-                           },
-                             child:
-                             Text('Creat New', style: TextStyle(fontSize: 12),),
-                             shape: RoundedRectangleBorder(
-                                 borderRadius: BorderRadius.all(Radius.circular(8))),
-                           ),
-                           RaisedButton(onPressed: (){
-                             Navigator.of(context).pushReplacement(
-                                 MaterialPageRoute(builder: (context) => MyJournalsScreen()));
-                           },
-                             child:
-                             Text('View', style: TextStyle(fontSize: 12, color: Colors.white),),
-                             shape: RoundedRectangleBorder(
-                                 borderRadius: BorderRadius.all(Radius.circular(8))),
-                             color: Colors.orange,
-                           ),
-                     ],
-             ),
-           ],
-           ),
-             ),
-       ],
-           ),
-         ));
-
+      _showSuccessBottomSheet();
       setState(() {
         _titleController.text = "";
         _addressController.text = "";
@@ -458,6 +402,77 @@ class _NewTripState extends State<NewTripJournalScreen> {
         _showMessage("Journal has been added successfully");
       });
     }
+  }
+
+  void _showSuccessBottomSheet() {
+    showModalBottomSheet(
+        context: this.context,
+        builder: (context) =>
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.green,
+                    child: Icon(
+                      Icons.check,
+                      color: Colors.white,
+                      size: 35,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Text(
+                    'Journal Has been Ssaved',
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        RaisedButton(
+                          onPressed: () {
+                            setState(() {
+                              _titleController.text = "";
+                              _addressController.text = "";
+                              _commentController.text = "";
+                              _image = null;
+                              _image1 = null;
+                              _image2 = null;
+                              _date = null;
+                              Navigator.of(context).pop();
+                            });
+                          },
+                          child: Text(
+                            'Create New',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(8))),
+                        ),
+                        RaisedButton(
+                          onPressed: () {},
+                          child: Text(
+                            'View',
+                            style: TextStyle(fontSize: 12, color: Colors.white),
+                          ),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(8))),
+                          color: Colors.orange,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ));
   }
 
   bool validateInput() {
@@ -473,6 +488,4 @@ class _NewTripState extends State<NewTripJournalScreen> {
     }
     return validated;
   }
-
-
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:traveldiary/Constants.dart';
 import 'package:traveldiary/HomeScreen.dart';
 import 'package:traveldiary/LoginScreen.dart';
+import 'package:traveldiary/RouteManager.dart';
 import 'package:traveldiary/SessionManager.dart';
 import 'package:traveldiary/dashboard/DashboardScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
       ),
       home: SessionManager.isLoggedIn ? HomeScreen() : LoginScreen(),
       debugShowCheckedModeBanner: false,
+      routes: RouteManager.routes,
     );
   }
 }
