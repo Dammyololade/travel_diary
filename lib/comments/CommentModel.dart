@@ -5,5 +5,13 @@
 /// created on: 07/05/2020
 class CommentModel {
   String userDocId, userName, comment, date, journalId;
-  int ratings;
+  double ratings;
+
+  CommentModel({this.userDocId, this.userName, this.comment, this.date,
+    this.journalId, this.ratings});
+
+  Map<String, dynamic> toMap() {
+    return {
+    };
+  }
 }

@@ -298,8 +298,8 @@ class _JournalDetailsScreenState extends State<JournalDetailsScreen> {
       DocumentReference docReference = collRef.document();
     CommentModel model = CommentModel(
       comment: _comment.text,
-      ratings: rate.toString(),
-      date: _ndate.toString(),
+        ratings: rate,
+        date: _ndate.toString(),
       journalId: docReference.documentID,
     );
     await _firestore.collection("Comments").add(model.toMap());
