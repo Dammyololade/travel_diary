@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 50, right: 50, bottom: 43),
                 child: (processing)
-                    ? CircularProgressIndicator()
+                    ? Center(child: CircularProgressIndicator())
                     : RaisedButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(6))),
